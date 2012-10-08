@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+<script src="jquery.preimage.js"></script>
+<script>
+
+$(document).ready(function()
+{
+	$('.file').preimage();
+});
+
+</script>
+<style>
+.prev_container{
+	overflow: auto;
+	width: 300px;
+	height: 135px;
+}
+
+.prev_thumb{
+	margin: 10px;
+	height: 100px;
+}
+</style>
+<meta charset=utf-8 />
+<title>jQuery file upload</title>
+</head>
+<body>
+	<input class="file" id="file1" type='file' multiple title="test #1"/>
+	<div id="prev_file1"></div><br/>
+	
+	<input class="file" id="file2" type='file' multiple title="test #2"/>
+	<div id="prev_file2"></div>
+</body>
+</html>
