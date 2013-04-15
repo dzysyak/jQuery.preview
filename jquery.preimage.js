@@ -1,8 +1,9 @@
 (function( $ ){
   var settings = {
+  		'scale': 'contain', // cover
   		'prefix': 'prev_',
 		'types': ['image/gif', 'image/png', 'image/jpeg'],
-		'mime': {'.jpe': 'image/jpeg', '.jpeg': 'image/jpeg', '.jpg': 'image/jpeg', '.gif': 'image/gif', '.png': 'image/png', '.x-png': 'image/png', '.tif': 'image/tiff', '.tiff': 'image/tiff'}
+		'mime': {'jpe': 'image/jpeg', 'jpeg': 'image/jpeg', 'jpg': 'image/jpeg', 'gif': 'image/gif', 'png': 'image/png', 'x-png': 'image/png', 'tif': 'image/tiff', 'tiff': 'image/tiff'}
 	};
 
   var methods = {
@@ -73,34 +74,23 @@
      	
      	$('#'+settings['prefix']+id).html('');
      	
-     	for(i=0; i<this.files.length; i++){
-     		if(!$.inArray(this.files[i].type, settings['types']) == -1){
-     			window.alert("File of not allowed type");	
-     			return false
-     		}
-     	}
-     	
      	if(window.FileReader){
+     		for(i=0; i<this.files.length; i++){
+		 		if(!$.inArray(this.files[i].type, settings['types']) == -1){
+		 			window.alert("File of not allowed type");	
+		 			return false
+		 		}
+		 	}
+     	
      	    for(i=0; i<this.files.length; i++){
      	    	var reader = new FileReader();
 	    		reader.onload = function (e) {
-	    			//$('<img />').attr({'src': e.target.result, 'alt': 'Image preview' }).addClass(settings['prefix']+'thumb').appendTo($('#'+settings['prefix']+id));
-	    			$('<div />').css({'bacground-image': ('url('+e.target.result+')'), 'background-repeat': 'no-repeat', 'background-size': 'cover' }).addClass(settings['prefix']+'thumb').appendTo($('#'+settings['prefix']+id));
+	    			$('<div />').css({'background-image': ('url('+e.target.result+')'), 'background-repeat': 'no-repeat', 'background-size': settings['scale'] }).addClass(settings['prefix']+'thumb').appendTo($('#'+settings['prefix']+id));
 	    		};
 	    		reader.readAsDataURL(this.files[i]);
      	    }
      	}else{
-     		var ForReading = 1, ForWriting = 2;
-     		var fso = new ActiveXObject("Scripting.FileSystemObject");
-     		
-     		for(i=0; i<this.files.length; i++){
-				f = fso.OpenTextFile(this.files[i], ForReading);
-				var cnt = (f.AtEndOfStream)?"":f.ReadAll();
-     			f.Close();
-     			var ext = fso.GetExtensionName(this.files[i]);
-     			//$('<img />').attr({'src': 'data:image/'+ext+';'+this.base64_encode(cnt), 'alt': 'Image preview' }).addClass(settings['prefix']+'thumb').appendTo($('#'+settings['prefix']+id));
-     			$('<div />').css({'bacground-image': ("url('data:"+this.mime[ext]+";"+e.target.result+"')"), 'background-repeat': 'no-repeat', 'background-size': 'cover' }).addClass(settings['prefix']+'thumb').appendTo($('#'+settings['prefix']+id));
-     	    }
+     		if(window.confirm('Internet Explorer do not support required HTML5 features. \nPleas, download better browser - Firefox, Google Chrome, Opera... \nDo you want to download and install Google Chrome now?')){ window.location("//google.com/chrome"); }
      	}
      }
   };
